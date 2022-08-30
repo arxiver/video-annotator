@@ -1,4 +1,6 @@
 # video-annotator
+[Live preview](https://rrrokhtar.github.io/video-annotator/)
+
 Video annotation portable web app (A canvas based timeline for controlling and annotating video)
 
 This app is a part of [RapidAnnotator](https://github.com/RedHenLab/RapidAnnotator-2.0) (GSoC'22 project) and it is an extending work on [videotimeline.js](https://github.com/AlunAlun/videotimeline.js)
