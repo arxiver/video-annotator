@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="context-menu" id="timeline-cm">
+		<ul>
+			<li class="context-menu-item" id="cm-start">Set as start time</li>
+			<li class="context-menu-item" id="cm-end">Set as end time</li>
+			<li class="context-menu-item" id="cm-delete">Delete annotation</li>
+			<li class="context-menu-item" id="cm-mode">Scroll on mousewheel</li>
+			<li class="context-menu-item" id="cm-selection">Hide tracks on selection</li>
+			<li class="context-menu-item" id="cm-zoomin">Zoom-in</li>
+			<li class="context-menu-item" id="cm-zoomout">Zoom-out</li>
+		</ul>
+	</div>
+	<div id="content">
+		<div id="player" class="content-entry">
+			<video id="video" autoplay controls width="400" height="400">
+				<source src="./video.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+		<div class="content-entry">
+			<fieldset>
+				<legend id="af-title">Add Annotation</legend>
+				<div class="myForm">
+					<label>Track: </label> <select id="af-tracks-select">
+						<option value=-1>Choose track…</option>
+					</select>
+					<label>Annotation: </label>
+					<input type="text" id="af-text" placeholder="Write annotation text" />
+					<label>Start time: </label>
+					<input id="af-start-time" value=0 />
+					<label>End time: </label>
+					<input id="af-end-time" value=0 />
+					<label>Loop mode:</label>
+					<button id="loop-mode-btn" title="Loop mode; click to toggle between once and always">Off</button>
+					<label>Play mode:</label>
+					<button id="play-mode-btn"
+						title="Current playing mode; click to toggle between all video and from start to end time range only">All</button>
+					<hr />
+					<label>Seek mode:</label>
+					<button id="seek-mode-btn"
+						title="Current stepping mode; click to toggle between frames and seconds">Frames</button>
+					<div>
+						<button title="Backward" class="nav-button" id="backward-btn">
+							<i class="fa fa-backward"></i>
+						</button>
+						<input title="Seek steps" placeholder="Step" type="number" min="0" id="step-size" value=10>
+						<button title="Forward" class="nav-button" id="forward-btn">
+							<i class="fa fa-forward"></i>
+						</button>
+					</div>
+					<hr />
+					<div>
+						<button title="Reset all fields" class="action-btn" id="af-cancel">Cancel</button>
+						<button title="Save annotation" class="action-btn" id="af-save">Save</button>
+						<button title="Delete annotation" class="action-btn" id="af-delete">Delete</button>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div>
+		<canvas id='timeline'></canvas>
+	</div>
+</body>
+<script src="./js/VideoFrame.min.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
+<script>
+	var timeline = new Timeline("video");
+	timeline.addTrack(1, "track 01", [{
+		text: "text dsadasdasd",
+		backgroundColor: "yellow",
+		startTime: 0,
+		endTime: 10.5,
+	}, {
+		text: "text dsadasdasd",
+		backgroundColor: "white",
+		startTime: 5,
+		endTime: 40.5,
+	}], "green");
+	timeline.addTrack(2, "track 02", [{
+		text: "text dsadasdasd",
+		backgroundColor: "white",
+		startTime: 0,
+		endTime: 10.5,
+	}]);
+	timeline.addTrack(3, "track 03", [{
+		text: "text dsadasdasd",
+		backgroundColor: "white",
+		startTime: 0,
+		endTime: 10.5,
+	}]);
+	// dummy labels for annotaion level with id = 1
+	var annotationDataList = document.createElement("datalist");
+	annotationDataList.id = "af-labels-1";
+	var option = document.createElement("option");
+	option.value = "text 01";
+	annotationDataList.appendChild(option);
+	option = document.createElement("option");
+	option.value = "text 02";
+	annotationDataList.appendChild(option);
+	document.body.appendChild(annotationDataList);
+	document.getElementById('af-tracks-select').addEventListener('change', function () {
+		var selectedTrack = document.getElementById('af-tracks-select').value;
+		if (selectedTrack) {
+			document.getElementById('af-text').setAttribute('list', "af-labels-" + this.value);
+		}
+	});
+</script>
+
+</html>
